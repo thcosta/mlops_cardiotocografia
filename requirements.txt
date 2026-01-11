@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+mlflow
+dagshub
+scikit-learn
+panda
+matplotlib
+pytest
+pycodestyle
+tensorflow
