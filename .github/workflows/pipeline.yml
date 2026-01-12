@@ -11,9 +11,14 @@ on:
   repository_dispatch:
     types:
       - webhook
+
+env:
+  DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+
 jobs:
   test_train:
     runs-on: ubuntu-latest
+    environment: test
     steps:
       - uses: actions/checkout@v1
         with:
@@ -35,6 +40,7 @@ jobs:
 
   check_python_code_style:
     runs-on: ubuntu-latest
+    environment: test
     steps:
       - uses: actions/checkout@v1
         with:
@@ -56,6 +62,7 @@ jobs:
 
   train_pipeline:
       runs-on: ubuntu-latest
+      environment: test
       needs: [check_python_code_style, test_train]
       steps:
           - uses: actions/checkout@v1
@@ -78,6 +85,7 @@ jobs:
 
   build_image:
     runs-on: ubuntu-latest
+    environment: test
     needs: [train_pipeline]
     steps:
       - uses: actions/checkout@v2

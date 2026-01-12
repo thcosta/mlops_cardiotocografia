@@ -29,6 +29,8 @@ def reset_seeds():
 def config_mlflow():
     """Configuring MLflow and DagsHub integration"""
 
+    dagshub_token = os.environ.get('DAGSHUB_TOKEN')
+    dagshub.auth.add_app_token(token=dagshub_token, fail_if_no_token=True)
     dagshub.init(
         repo_owner='thcosta',
         repo_name='mlops_cardiotocografia',
@@ -38,7 +40,6 @@ def config_mlflow():
     mlflow.set_tracking_uri(
         'https://dagshub.com/thcosta/mlops_cardiotocografia.mlflow'
     )
-
     mlflow.tensorflow.autolog(log_models=True,
                               log_input_examples=True,
                               log_model_signatures=True)
